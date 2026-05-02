@@ -8,7 +8,7 @@ import type { Metadata } from 'next'
 
 interface Props {
 	children: React.ReactNode
-	params: Promise<{ locale: Locale }>
+	params: Promise<{ locale: string }>
 }
 
 export async function generateStaticParams() {
@@ -27,8 +27,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function LocaleLayout({ children, params }: Props) {
-	const { locale } = await params
-	const dict = getDictionary(locale)
+	const locale = (await params).locale as Locale
+	const dict = getDictionary(locale as Locale)
 
 	return (
 		<div lang={locale}>
