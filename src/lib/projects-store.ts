@@ -1,20 +1,18 @@
 import type { Project } from '@/types'
-import { promises as fs } from 'fs'
-import path from 'path'
+import Redis from 'ioredis'
 
-const FILE = path.join(process.cwd(), 'src/data/projects.json')
+const redis = new Redis(process.env.REDIS_URL!)
+
+const KEY = 'projects'
 
 export async function getProjects(): Promise<Project[]> {
-	try {
-		const raw = await fs.readFile(FILE, 'utf-8')
-		return JSON.parse(raw)
-	} catch {
-		return []
-	}
+	const data = await redis.get(KEY)
+	if (!data) return []
+	return JSON.parse(data)
 }
 
 export async function saveProjects(projects: Project[]): Promise<void> {
-	await fs.writeFile(FILE, JSON.stringify(projects, null, 2))
+	await redis.set(KEY, JSON.stringify(projects))
 }
 
 export async function addProject(project: Project): Promise<void> {
