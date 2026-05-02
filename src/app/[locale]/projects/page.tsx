@@ -1,5 +1,6 @@
 import ProjectsList from '@/components/projects/ProjectsList'
 import { getDictionary } from '@/lib/i18n'
+import { getProjects } from '@/lib/projects-store'
 import type { Locale } from '@/types'
 
 interface Props {
@@ -18,6 +19,7 @@ export async function generateMetadata({ params }: Props) {
 export default async function ProjectsPage({ params }: Props) {
 	const { locale } = await params
 	const dict = getDictionary(locale)
+	const projects = await getProjects()
 
 	return (
 		<div className="min-h-screen pt-24">
@@ -28,6 +30,7 @@ export default async function ProjectsPage({ params }: Props) {
 					title: dict.projects.allTitle
 				}}
 				locale={locale}
+				projects={projects}
 			/>
 		</div>
 	)

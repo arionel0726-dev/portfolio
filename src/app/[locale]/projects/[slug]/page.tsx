@@ -1,9 +1,9 @@
 import ProjectDetail from '@/components/projects/ProjectDetail'
 import { PROJECTS } from '@/data/projects'
 import { getDictionary } from '@/lib/i18n'
+import { getProjects } from '@/lib/projects-store'
 import type { Locale } from '@/types'
 import { notFound } from 'next/navigation'
-
 interface Props {
 	params: Promise<{ locale: Locale; slug: string }>
 }
@@ -25,7 +25,8 @@ export async function generateMetadata({ params }: Props) {
 export default async function ProjectDetailPage({ params }: Props) {
 	const { slug, locale } = await params
 	const dict = getDictionary(locale)
-	const project = PROJECTS.find(p => p.slug === slug)
+	const projects = await getProjects()
+	const project = projects.find(p => p.slug === slug)
 	if (!project) notFound()
 
 	return (

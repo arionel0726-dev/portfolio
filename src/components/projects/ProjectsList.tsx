@@ -1,8 +1,7 @@
 'use client'
 
-import { PROJECTS } from '@/data/projects'
 import { usePageNav } from '@/hooks/usePageNav'
-import type { Locale } from '@/types'
+import type { Locale, Project } from '@/types'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef } from 'react'
@@ -12,9 +11,10 @@ gsap.registerPlugin(ScrollTrigger)
 interface Props {
 	dict: { pre: string; title: string; viewAll: string }
 	locale: Locale
+	projects: Project[]
 }
 
-export default function ProjectsList({ dict, locale }: Props) {
+export default function ProjectsList({ dict, locale, projects }: Props) {
 	const listRef = useRef<HTMLDivElement>(null)
 	const { navigateTo } = usePageNav()
 	useEffect(() => {
@@ -58,7 +58,7 @@ export default function ProjectsList({ dict, locale }: Props) {
 				</div>
 
 				<div className="projects-page__list">
-					{PROJECTS.map((project, i) => (
+					{projects.map((project, i) => (
 						<a
 							key={project.id}
 							href={`/${locale}/projects/${project.slug}`}

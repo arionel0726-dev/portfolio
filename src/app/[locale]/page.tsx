@@ -3,6 +3,7 @@ import Contact from '@/components/sections/Contact'
 import Hero from '@/components/sections/Hero'
 import Projects from '@/components/sections/Projects'
 import { getDictionary } from '@/lib/i18n'
+import { getProjects } from '@/lib/projects-store'
 import type { Locale } from '@/types'
 import { Metadata } from 'next'
 
@@ -36,6 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function HomePage({ params }: Props) {
 	const { locale } = await params
 	const dict = getDictionary(locale)
+	const projects = await getProjects()
 
 	return (
 		<>
@@ -44,6 +46,7 @@ export default async function HomePage({ params }: Props) {
 			<Projects
 				dict={dict.projects}
 				locale={locale}
+				projects={projects}
 			/>
 			<Contact dict={dict.contact} />
 		</>
