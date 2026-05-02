@@ -7,6 +7,8 @@ import { getProjects } from '@/lib/projects-store'
 import type { Locale } from '@/types'
 import { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 interface Props {
 	params: Promise<{ locale: Locale }>
 }

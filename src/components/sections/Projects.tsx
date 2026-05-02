@@ -6,6 +6,8 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef } from 'react'
 
+export const dynamic = 'force-dynamic'
+
 gsap.registerPlugin(ScrollTrigger)
 
 interface Props {
