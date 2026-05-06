@@ -3,6 +3,8 @@ import { getDictionary } from '@/lib/i18n'
 import { getProjects } from '@/lib/projects-store'
 import type { Locale } from '@/types'
 
+export const dynamic = 'force-dynamic'
+
 interface Props {
 	params: Promise<{ locale: Locale }>
 }
